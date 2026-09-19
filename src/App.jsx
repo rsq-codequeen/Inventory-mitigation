@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import EnterStock from "./pages/EnterStock";
 import Dashboard from "./pages/Dashboard";
-import LandingPage from './pages/LandingPage';
+
 import AppNavbar from './components/AppNavbar';
 import Discounts from './pages/Discount';
 import Analytics from './pages/Analytics';
@@ -34,8 +34,8 @@ function AppContent() {
       
       <main className="flex-1 flex flex-col">
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          
+          <Route path="/" element={<Dashboard />} />
           <Route path="/enter-stock" element={<EnterStock />} />
           <Route path="/discount" element={<Discounts />} />
           <Route path="/analytics" element={<Analytics />} />
