@@ -15,6 +15,7 @@ const ScrollExpand = ({
   poster = '',
   alt = '',
   title = '',
+  titleSize = null,
   scrollHint = '',
   startWidth = 42,
   startHeight = 58,
@@ -117,7 +118,7 @@ const ScrollExpand = ({
       track.style.height = `${stageH * (1 + Math.max(0, c.scrollDistance) + Math.max(0, c.holdDistance))}px`;
 
       const w = root.clientWidth || stageH;
-      stage.style.setProperty('--se-title-size', `${clamp(w * 0.075, 20, 84)}px`);
+      stage.style.setProperty('--se-title-size', `${titleSize || clamp(w * 0.075, 20, 84)}px`);
     };
 
     const readProgress = () => {

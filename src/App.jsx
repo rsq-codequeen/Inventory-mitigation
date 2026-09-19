@@ -1,48 +1,54 @@
+import { useEffect, useState } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import EnterStock from "./pages/EnterStock";
+import Dashboard from "./pages/Dashboard";
+import LandingPage from './pages/LandingPage';
+import AppNavbar from './components/AppNavbar';
+import Discounts from './pages/Discount';
+import Analytics from './pages/Analytics';
+function AppContent() {
+  const location = useLocation();
+  const isLandingPage = location.pathname === '/';
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
 
-import ScrollExpand from '@/components/ScrollExpand';
-import SpecularButton from '@/components/SpecularButton';
-function App() {
+  useEffect(() => {
+    const root = document.documentElement;
+
+    if (isLandingPage) {
+      root.classList.remove('dark');
+      return;
+    }
+
+    root.classList.toggle('dark', theme === 'dark');
+    localStorage.setItem('theme', theme);
+  }, [isLandingPage, theme]);
 
   return (
-    <>
-      <ScrollExpand
-  src="/hero.jpg"
-  alt="Product hero"
-  title="Built to scale"
-  scrollHint="Scroll inside the frame"
-  useWindowScroll
->
-  <h2 className='text-white'>Every pixel, everywhere</h2>
-  <p className='text-white'>The frame opens up as you scroll and hands the whole stage to your media.</p>
-
-  <SpecularButton 
- 
-  size="lg"
-  radius={18}
-  tint="#ffffff"
-  tintOpacity={0}
-  blur={0}
-  textColor="#f5f5f5"
-  lineColor="#ffffff"
-  baseColor="#525252"
-  intensity={1}
-  shineSize={10}
-  shineFade={40}
-  thickness={1}
-  speed={0.35}
-  followMouse
-  proximity={250}
-  autoAnimate={false}
-  onClick={() => console.log('clicked')}
->
-  Get Started
-</SpecularButton>
-</ScrollExpand>
-
-
-
-    </>
-  )
+    <div className="min-h-screen bg-background flex flex-col">
+      {!isLandingPage && (
+        <AppNavbar
+          theme={theme}
+          onToggleTheme={() => setTheme((current) => current === 'dark' ? 'light' : 'dark')}
+        />
+      )}
+      
+      <main className="flex-1 flex flex-col">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/enter-stock" element={<EnterStock />} />
+          <Route path="/discount" element={<Discounts />} />
+          <Route path="/analytics" element={<Analytics />} />
+        </Routes>
+      </main>
+    </div>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <AppContent />
+  );
+}
+
+export default App;

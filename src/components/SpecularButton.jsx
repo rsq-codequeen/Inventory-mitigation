@@ -87,7 +87,9 @@ const SpecularButton = ({
   disabled = false,
   onClick,
   className = '',
-  type = 'button'
+  type = 'button',
+  gradient = 'linear-gradient(135deg, #334155 0%, #0f172a 52%, #020617 100%)',
+  icon = null
 }) => {
   const btnRef = useRef(null);
   const fxRef = useRef(null);
@@ -235,11 +237,15 @@ const SpecularButton = ({
         '--sb-tint': tint,
         '--sb-tint-opacity': tintOpacity,
         '--sb-blur': `${blur}px`,
-        '--sb-text-color': textColor
+        '--sb-text-color': textColor,
+        '--sb-gradient': gradient
       }}
     >
       <span ref={fxRef} className="specular-button__fx" aria-hidden="true" />
-      <span className="specular-button__label">{children}</span>
+      <span className="specular-button__content">
+        {icon ? <span className="specular-button__icon">{icon}</span> : null}
+        <span className="specular-button__label">{children}</span>
+      </span>
     </button>
   );
 };
